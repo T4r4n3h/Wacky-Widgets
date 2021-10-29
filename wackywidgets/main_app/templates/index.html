@@ -5,12 +5,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>Wacky Widgets</title>
 </head>
 <body>
     <h1>Wacky Widgets</h1>
-    <h3>No Widgets Exist</h3>
+    {% if widget.length == 0%}
+    <h3> Widgets Exists</h3>
     <hr>
+    {% else %}
+    <h3>No Widget</h3>
+    <hr>
+    {% endif %}    
+    
+       
+        <div class="row">
+            <div class="col s6">
+                <table class="striped">
+                    <thead >
+                      <tr><th>Description</th><th>Quantity</th><th>Delete</th></tr>
+                    </thead>
+                    <tbody>
+                      {% for wdg in widget %}
+                        <tr>
+                          <td>{{wdg.description}}</td>
+                          <td>{{wdg.quantity}}</td>
+                          <td><a  class ="red-text" href="{{wdg.id}}/delete">X</a></td>
+                        </tr>
+                        
+                      {% endfor %}
+                      <tr>
+                        <td>Total Quantity:</td><td>AHH!!</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                <h4>Add Widget</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <form action="/add/" method="POSt">
+                    {% csrf_token %}
+                    {{ widget_form.as_p }}
+                    <button type="submit">ADD WIDGET</button>
+                </form>
+            </div>
+        </div>
+ 
+    
 </body>
 </html>
